@@ -76,9 +76,10 @@ function getVers
     $login = $args[0]
     Foreach ($server in $allServerNames)
     {
+        Write-Host $server
         Write-Verbose "Please enter the administrator password for $server." -Verbose
         # Get VMWare tools versions
-        $VMWarevers = Invoke-Command -ComputerName UC1MSCHPWSH01 -ScriptBlock {  C:\"Program Files"\VMware\"VMware Tools"\VMwareToolboxCmd.exe -v } -credential $login
+        $VMWarevers = Invoke-Command -ComputerName $server -ScriptBlock {  C:\"Program Files"\VMware\"VMware Tools"\VMwareToolboxCmd.exe -v } -credential $login
         $newRow = new-object system.object
         $newRow | Add-Member -type NoteProperty -name "ServerName" -value $server
         $newRow | Add-Member -type NoteProperty -name "VMWare Tools Version" -value $VMWarevers
